@@ -36,21 +36,21 @@ class Retriever(object):
             if t in self.index.keys():
                 for doc, info in self.index[t].items():
                     weight = info["tf-idf"]
-                    doc_dict[doc] -= weight # Invert weight since heapq is min-heap
+                    doc_dict[doc] = -weight # Invert weight since heapq is min-heap
 
         # Convert dict to priority queue based on tf-idf weights
         #print doc_dict
 
         pq = []
         for doc, weight in doc_dict.items():
-            pq.append((str(weight), self.doc_map[doc]))
+            pq.append((weight, self.doc_map[doc]))
 
         heapq.heapify(pq)
         # Output results into a text file named as the input term
         with open("%s.txt" % terms[0], "w") as f:
             f.write("tf-idf   url\n")
             for link in pq:
-                line = ' '.join(link) + "\n"
+                line = str(-link[0]) + " " + link[1] + "\n"
                 f.write(line)
 
 
