@@ -133,7 +133,7 @@ def save():
 
 def main():
     start_time = time.time()
-    path_base = "webpages\WEBPAGES_RAW"
+    path_base = "WEBPAGES_RAW"
     index_corpus(path_base)
     end_time = time.time()
     print "index total time %.2f" % (end_time - start_time)
