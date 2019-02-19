@@ -51,11 +51,12 @@ def index_corpus(path):
     global index_json
     global document_nums
 
-    for i in range(75):
-        for j in range(500):
+    for i in range(20):
+        for j in range(100):
             if i == 74 and j > 496:
                 break
             filename = "\%d\%d" % (i, j)
+            save_filename = "%d/%d" % (i, j)
 
             if j % 50 == 0:
                 print "now working " + filename
@@ -77,10 +78,10 @@ def index_corpus(path):
                     for index, term in enumerate(terms_head):
                         if term not in index_json:
                             index_json[term] = {}
-                            index_json[term][filename] = {"tf": 0, "tf-idf": 0, "body": []}
-                        if filename not in index_json[term]:
-                            index_json[term][filename] = {"tf": 0, "tf-idf": 0, "body": []}
-                        index_json[term][filename]["tf"] += 1
+                            index_json[term][save_filename] = {"tf": 0, "tf-idf": 0, "body": []}
+                        if save_filename not in index_json[term]:
+                            index_json[term][save_filename] = {"tf": 0, "tf-idf": 0, "body": []}
+                        index_json[term][save_filename]["tf"] += 1
 
                 if soup.body is not None:
                     all_text = filter(valid, soup.body.find_all(text=True))
@@ -90,14 +91,14 @@ def index_corpus(path):
                     for index, term in enumerate(terms_body):
                         if term not in index_json:
                             index_json[term] = {}
-                            index_json[term][filename] = {"tf": 0, "tf-idf": 0, "body": []}
-                        if filename not in index_json[term]:
-                            index_json[term][filename] = {"tf": 0, "tf-idf": 0, "body": []}
-                        index_json[term][filename]["tf"] += 1
-                        index_json[term][filename]["body"].append(index)
+                            index_json[term][save_filename] = {"tf": 0, "tf-idf": 0, "body": []}
+                        if save_filename not in index_json[term]:
+                            index_json[term][save_filename] = {"tf": 0, "tf-idf": 0, "body": []}
+                        index_json[term][save_filename]["tf"] += 1
+                        index_json[term][save_filename]["body"].append(index)
 
                 global field_norms
-                field_norms[filename] = terms_len
+                field_norms[save_filename] = terms_len
 
     for term in index_json:
         doc_freq = len(index_json[term])
@@ -110,10 +111,10 @@ def index_corpus(path):
             df_max = doc_freq
             df_max_word = term
 
-        for filename in index_json[term]:
-            tf = index_json[term][filename]["tf"]
+        for save_filename in index_json[term]:
+            tf = index_json[term][save_filename]["tf"]
             tf_idf = math.log(document_nums / (doc_freq + 1)) * math.sqrt(tf)
-            index_json[term][filename]["tf-idf"] = round(tf_idf, 3)
+            index_json[term][save_filename]["tf-idf"] = round(tf_idf, 3)
             if tf_idf > tf_idf_max:
                 tf_idf_max = tf_idf
 

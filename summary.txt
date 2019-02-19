@@ -1,0 +1,8 @@
+number of documents = 1846 
+
+number of words = 37319 
+
+max doc freq = 1015 is uci 
+
+max tf-idf = 145.782670486 
+
