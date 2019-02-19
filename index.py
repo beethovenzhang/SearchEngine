@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup, Comment
 import nltk
 from nltk.corpus import stopwords
 import math
+import os
 
 nltk.download('stopwords')
 stop_words = set(stopwords.words('english'))
@@ -54,7 +55,7 @@ def index_corpus(path):
         for j in range(500):
             if i == 74 and j > 496:
                 break
-            filename = "%d/%d" % (i, j)
+            filename = "\%d\%d" % (i, j)
 
             if j % 50 == 0:
                 print "now working " + filename
@@ -130,13 +131,16 @@ def save():
         print >> f, "max doc freq =", df_max, "is", df_max_word, "\n"
         print >> f, "max tf-idf =", tf_idf_max, "\n"
 
+def main():
+    start_time = time.time()
+    path_base = "webpages\WEBPAGES_RAW"
+    index_corpus(path_base)
+    end_time = time.time()
+    print "index total time %.2f" % (end_time - start_time)
+    start_time = time.time()
+    save()
+    end_time = time.time()
+    print "save total time %.2f" % (end_time - start_time)
 
-start_time = time.time()
-path_base = "/Users/yakumorin/Documents/19W/CS221/WEBPAGES_RAW/"
-index_corpus(path_base)
-end_time = time.time()
-print "index total time %.2f" % (end_time - start_time)
-start_time = time.time()
-save()
-end_time = time.time()
-print "save total time %.2f" % (end_time - start_time)
+if __name__ == "__main__":
+    main()
