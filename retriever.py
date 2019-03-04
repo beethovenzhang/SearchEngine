@@ -1,3 +1,5 @@
+''' To be used with the module search. Can't run individually'''
+
 import os
 import re
 import sys
@@ -9,9 +11,11 @@ import string
 from collections import defaultdict
 
 
+
 class Retriever(object):
 
     def __init__(self, index_file="index.json"):
+
         self.load_index(index_file)
 
 
@@ -21,7 +25,7 @@ class Retriever(object):
         with open(index_file, 'r') as f:
             str = f.read()
             self.index = json.loads(str)
-
+            
         print("Loading document map...")
         with open("WEBPAGES_RAW/bookkeeping.json", 'r') as f:
             self.doc_map = json.loads(f.read())
@@ -46,16 +50,7 @@ class Retriever(object):
             pq.append((weight, self.doc_map[doc]))
 
         heapq.heapify(pq)
-        # Output results into a text file named as the input term
-        with open("%s.txt" % terms[0], "w") as f:
-            f.write("tf-idf   url\n")
-            for link in pq:
-                dict = []
-                weight = str(-link[0])
-                url = link[1]
-                if url not in dict:
-                    line = weight + " " + url + "\n"
-                    f.write(line)
+        return pq
 
 
 
@@ -66,5 +61,4 @@ if __name__ == "__main__":
         print("To use: python retrieve.py <term>")
         exit()
 
-    retriever = Retriever()
-    retriever.retrieve(sys.argv[1:])
+    retrieve(sys.argv[1:])

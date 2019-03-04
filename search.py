@@ -5,7 +5,6 @@ import heapq
 import urlparse
 import requests
 import lxml.html
-import indexer
 from retriever import Retriever
 import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()
@@ -14,7 +13,7 @@ requests.packages.urllib3.disable_warnings()
 # GLOBAL VARIABLES #
 ####################
 
-terminate_terms = set(['exit','q','quit','qq','bye','goodbye'])
+terminate_terms = set(['exit','q','quit','qq','bye','goodbye', 'zaijian', 'sayounara', 'annyeong'])
 pattern = re.compile('([^\s\w]|_)+')
 
 
@@ -49,12 +48,11 @@ def print_url(url):
     # Print URL and title
     try:
         html = lxml.html.fromstring(r.text)
-        print(url)
-
         try: # Some valid webpages don't have titles
             print(html.find(".//title").text.strip())
         except:
             pass
+        print(url)
 
         print('')
         sys.stdout.flush()

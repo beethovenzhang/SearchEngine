@@ -1,3 +1,4 @@
+''' This module is to write the file for Milestone 2. Can be run individually.'''
 import os
 import re
 import sys
