@@ -61,12 +61,8 @@ def print_url(url):
     except:
         return False
 
-
-########
-# MAIN #
-########
-
-if __name__ == '__main__':
+def main():
+    '''Things to do when this module is called'''
 
     r = Retriever()
     c = raw_input('Enter a search term (q to quit): ')
@@ -99,3 +95,10 @@ if __name__ == '__main__':
 
 
     print ('\n############\n# Goodbye! #\n############\n')
+    
+########
+# MAIN #
+########
+
+if __name__ == '__main__':
+    main()

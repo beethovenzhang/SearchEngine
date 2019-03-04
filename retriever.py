@@ -25,7 +25,7 @@ class Retriever(object):
         with open(index_file, 'r') as f:
             str = f.read()
             self.index = json.loads(str)
-            
+
         print("Loading document map...")
         with open("WEBPAGES_RAW/bookkeeping.json", 'r') as f:
             self.doc_map = json.loads(f.read())
@@ -43,7 +43,6 @@ class Retriever(object):
                     doc_dict[doc] = -weight # Invert weight since heapq is min-heap
 
         # Convert dict to priority queue based on tf-idf weights
-        #print doc_dict
 
         pq = []
         for doc, weight in doc_dict.items():
