@@ -52,8 +52,8 @@ def index_corpus(path):
     global index_json
     global document_nums
 
-    for i in range(10):
-        for j in range(100):
+    for i in range(75):
+        for j in range(500):
             if i == 74 and j > 496:
                 break
             filename = "\%d\%d" % (i, j)

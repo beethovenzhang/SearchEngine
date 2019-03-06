@@ -38,20 +38,20 @@ def get_links(query, retriever):
 
 def print_url(url):
     # Get webpage content
-    # try:
-    #     r = requests.get(url, timeout=2)
-    # except requests.exceptions.MissingSchema:
-    #     return print_url("http://{}".format(url))
-    # except:
-    #     return False
+    try:
+        r = requests.get(url, timeout=2)
+    except requests.exceptions.MissingSchema:
+        return print_url("http://{}".format(url))
+    except:
+        return False
 
     # Print URL and title
     try:
-        # html = lxml.html.fromstring(r.text)
-        # try: # Some valid webpages don't have titles
-        #     print(html.find(".//title").text.strip())
-        # except:
-        #     pass
+        html = lxml.html.fromstring(r.text)
+        try: # Some valid webpages don't have titles
+            print(html.find(".//title").text.strip())
+        except:
+            pass
         print(url)
 
         print('')

@@ -14,21 +14,23 @@ from collections import defaultdict
 
 class Retriever(object):
 
-    def __init__(self, index_file="index.json"):
+    def __init__(self):
+        self.load_documents()
 
-        self.load_index(index_file)
 
+    def load_documents(self):
+        print("Loading document map...")
+        with open("WEBPAGES_RAW/bookkeeping.json", 'r') as f:
+            self.doc_map = json.loads(f.read())
 
     def load_index(self, index_file):
-        # Load index and document map
+        # Load index file according to the input
         print("Loading index... ")
         with open(index_file, 'r') as f:
             str = f.read()
             self.index = json.loads(str)
 
-        print("Loading document map...")
-        with open("WEBPAGES_RAW/bookkeeping.json", 'r') as f:
-            self.doc_map = json.loads(f.read())
+
 
 
     def retrieve(self, terms):
@@ -36,6 +38,9 @@ class Retriever(object):
 
         # Gather all docs which contain at least one term
         for t in terms:
+            filename = t[0 : 3]
+            index_file = "index_folder\\" + filename + ".json"
+            self.load_index(index_file)
             t = t.lower()
             if t in self.index.keys():
                 for doc, info in self.index[t].items():
@@ -57,7 +62,7 @@ class Retriever(object):
 if __name__ == "__main__":
 
     if len(sys.argv) < 2:
-        print("To use: python retrieve.py <term>")
+        print("To use: python retriever.py <term>")
         exit()
 
     retrieve(sys.argv[1:])
